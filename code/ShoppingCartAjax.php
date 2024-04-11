@@ -1,6 +1,8 @@
 <?php
-use SilverStripe\Core\Extension;
+
 use SilverShop\Cart\ShoppingCart;
+use SilverStripe\Core\Config\Configurable;
+use SilverStripe\Core\Extension;
 
 /**
  * Ajax-specific functionality for shopping cart controller
@@ -12,6 +14,7 @@ use SilverShop\Cart\ShoppingCart;
  */
 class ShoppingCartAjax extends Extension
 {
+    use Configurable;
 
     /**
      * @param SS_HTTPRequest $request
@@ -34,7 +37,7 @@ class ShoppingCartAjax extends Extension
             ShoppingCart::curr()->calculate();
 
             $this->setupRenderContexts($response, $product);
-            $response->pushRegion('SideCart', $this->owner);
+            $response->pushRegion('Includes\SideCart', $this->owner);
             $response->triggerEvent('cartadd');
             $response->triggerEvent('cartchange', array(
                 'action'    => 'add',
@@ -69,7 +72,7 @@ class ShoppingCartAjax extends Extension
             $order->calculate();
 
             $this->setupRenderContexts($response, $product);
-            $response->pushRegion('SideCart', $this->owner);
+            $response->pushRegion('Includes\SideCart', $this->owner);
             $response->pushRegion('CartFormAjax', $this->owner, array('Editable' => true));
             $response->triggerEvent('cartremove');
             $response->triggerEvent('cartchange', array(
@@ -109,7 +112,7 @@ class ShoppingCartAjax extends Extension
             $order->calculate();
 
             $this->setupRenderContexts($response, $product);
-            $response->pushRegion('SideCart', $this->owner);
+            $response->pushRegion('Includes\SideCart', $this->owner);
             $response->pushRegion('CartFormAjax', $this->owner, array('Editable' => true));
             $response->triggerEvent('cartremove');
             $response->triggerEvent('cartchange', array(
@@ -150,7 +153,7 @@ class ShoppingCartAjax extends Extension
             $order->calculate();
 
             $this->setupRenderContexts($response, $product);
-            $response->pushRegion('SideCart', $this->owner);
+            $response->pushRegion('Includes\SideCart', $this->owner);
             $response->triggerEvent('cartquantity');
             $response->triggerEvent('cartchange', array(
                 'action'    => 'setquantity',
@@ -187,7 +190,7 @@ class ShoppingCartAjax extends Extension
             ShoppingCart::curr()->calculate();
 
             $this->setupRenderContexts($response);
-            $response->pushRegion('SideCart', $this->owner);
+            $response->pushRegion('Includes\SideCart', $this->owner);
             $response->triggerEvent('cartempty'); // this is triggered any time the cart has no items in it
             $response->triggerEvent('cartchange', array(
                 'action'    => 'clear',
@@ -230,7 +233,7 @@ class ShoppingCartAjax extends Extension
 
             $this->setupRenderContexts($response, $variation);
             $response->addRenderContext('FORM', $form);
-            $response->pushRegion('SideCart', $this->owner);
+            $response->pushRegion('Includes\SideCart', $this->owner);
             $response->triggerEvent('cartadd');
             $response->triggerEvent('cartchange', array(
                 'action'    => 'add',
@@ -275,7 +278,7 @@ class ShoppingCartAjax extends Extension
 
             $this->setupRenderContexts($response, $buyable);
             $response->addRenderContext('FORM', $form);
-            $response->pushRegion('SideCart', $this->owner);
+            $response->pushRegion('Includes\SideCart', $this->owner);
             $response->triggerEvent('cartadd');
             $response->triggerEvent('cartchange', array(
                 'action'    => 'add',
@@ -321,7 +324,7 @@ class ShoppingCartAjax extends Extension
             $this->triggerStatusMessage($response, $form);
 
             $response->pushRegion('CartFormAjax', $this->owner, array('Editable' => true));
-            $response->pushRegion('SideCart', $this->owner);
+            $response->pushRegion('Includes\SideCart', $this->owner);
         }
     }
 
@@ -390,15 +393,5 @@ class ShoppingCartAjax extends Extension
                 'type'      => $type
             ));
         }
-    }
-
-    /**
-     * Helper for getting static shop config.
-     * The 'config' static function isn't avaialbe on Extensions.
-     * @return Config_ForClass configuration object
-     */
-    public static function config()
-    {
-        return new Config_ForClass("ShoppingCartAjax");
     }
 }
