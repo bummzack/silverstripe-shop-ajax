@@ -1,4 +1,7 @@
 <?php
+use SilverStripe\Core\Extension;
+use SilverShop\Cart\ShoppingCart;
+
 /**
  * Ajax-specific functionality for shopping cart controller
  *
