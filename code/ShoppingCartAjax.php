@@ -294,7 +294,7 @@ class ShoppingCartAjax extends Extension
     /**
      * Adds the ajax class to the CartForm
      */
-    public function updateCartForm(&$form, $cart)
+    public function updateCartForm(&$form)
     {
         $form->addExtraClass('ajax');
         $form->setAttribute('data-ajax-region', 'CartFormAjax');
