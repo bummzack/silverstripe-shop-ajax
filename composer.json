@@ -19,8 +19,8 @@
         }
     ],
 	"require": {
-		"silverstripe/recipe-core": "^4",
-        "silvershop/core": "^3",
+		"silverstripe/recipe-core": "^4 | ^5",
+        "silvershop/core": "^3 | ^4",
 		"markguinn/silverstripe-ajax": "dev-ss4"
 	}
 }
